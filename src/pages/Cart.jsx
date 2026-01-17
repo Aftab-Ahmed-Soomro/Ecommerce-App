@@ -98,7 +98,10 @@ const Cart = () => {
         }
     }
 
-    const deleteCartProduct = async(id) =>{
+    const deleteCartProduct = async(id) => {
+        // Optimistically update UI
+        setData(prevData => prevData.filter(item => item._id !== id));
+        
         try {
             const response = await axiosInstance({
                 url: summaryApi.deleteCartProduct.url,
@@ -111,11 +114,16 @@ const Cart = () => {
             const responseData = response.data;
 
             if(responseData.success) {
-                fetchData()
                 context.fetchUserAddToCart()
+            } else {
+                // Rollback on failure
+                fetchData()
             }
         } catch (error) {
             console.error("Error deleting cart product:", error);
+            // Rollback on error
+            fetchData()
+            context.fetchUserAddToCart()
         }
     }
 
