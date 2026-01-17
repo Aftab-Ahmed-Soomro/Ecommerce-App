@@ -31,13 +31,12 @@ const CategoryList = () => {
     },[])
   return (
     <div className='container mx-auto p-4'>
-      <div className='flex items-center gap-4 justify-between overflow-scroll scrollBar-none'>
+      <div className='flex items-center gap-6 justify-between overflow-x-scroll scrollBar-none py-2'>
         {
           loading ? (
               categoryLoading.map((el,index)=> {
                 return (
-                    <div className='h-16 w-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-slate-200 animate-pulse'>
-
+                    <div key={"loading"+index} className='h-20 w-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-slate-200 animate-pulse'>
                     </div>
                 )
               })
@@ -45,11 +44,11 @@ const CategoryList = () => {
           (
             categoryProduct.map((product,index)=> {
               return (
-                <Link to={"/product-category?category="+product?.category} key={product?.category} className='cursor-pointer'>
-                  <div className='w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden p-4 bg-slate-200 flex items-center justify-center'>
-                    <img src={product?.productImage[0]} alt={product?.category} className='h-full object-scale-down mix-blend-multiply hover:scale-125 transition-all' />
+                <Link to={"/product-category?category="+product?.category} key={product?.category} className='cursor-pointer group flex flex-col items-center gap-2' style={{animationDelay: `${index * 0.1}s`}}>
+                  <div className='w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden p-4 bg-white shadow-md group-hover:shadow-xl transition-all duration-300 flex items-center justify-center border border-slate-100 group-hover:border-red-500'>
+                    <img src={product?.productImage[0]} alt={product?.category} className='h-full object-scale-down mix-blend-multiply group-hover:scale-110 transition-all duration-300' />
                   </div>
-                  <p className='text-center text-sm md:text-base capitalize'>{product?.category}</p>
+                  <p className='text-center text-sm md:text-base capitalize font-medium text-slate-700 group-hover:text-red-600 transition-colors'>{product?.category}</p>
                 </Link>
               )
             })

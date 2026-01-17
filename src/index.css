@@ -1,52 +1,74 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 body {
-    @apply bg-slate-100
+  @apply bg-slate-50 font-sans text-slate-800;
+  font-family: 'Poppins', sans-serif;
 }
 
 .customShadow {
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 /* user table */
 .userTable {
-    @apply bg-white
+  @apply bg-white
 }
 
-.userTable th{
-    @apply text-base font-medium
+.userTable th {
+  @apply text-base font-medium
 }
 
-.userTable td{
-    @apply border border-gray-300 text-base text-center p-1
+.userTable td {
+  @apply border border-gray-300 text-base text-center p-1
 }
 
-  /* Custom scrollbar for the specific div */
-  .scrollbar-custom::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .scrollbar-custom::-webkit-scrollbar-thumb {
-    background-color: #ef4444; /* Tailwind red-500 */
-    border-radius: 10px;
-  }
-  
-  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
-    background-color: #dc2626; /* Darker red on hover */
-  }
-  
-  .scrollbar-custom::-webkit-scrollbar-track {
-    background-color: #f3f4f6; /* Light gray background */
-    border-radius: 10px;
-  }
-  
-  /* Firefox support */
-  .scrollbar-custom {
-    scrollbar-width: thin;
-    scrollbar-color: #ef4444 #f3f4f6;
-  }
-  
-  /* Hide Scroll Bar */
-  .scrollBar-none::-webkit-scrollbar {
-    display: none;
-  }
+/* Custom scrollbar for the specific div */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #ef4444;
+  /* Tailwind red-500 */
+  border-radius: 10px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background-color: #dc2626;
+  /* Darker red on hover */
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background-color: #f3f4f6;
+  /* Light gray background */
+  border-radius: 10px;
+}
+
+/* Firefox support */
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: #ef4444 #f3f4f6;
+}
+
+/* Hide Scroll Bar */
+.scrollBar-none::-webkit-scrollbar {
+  display: none;
+}

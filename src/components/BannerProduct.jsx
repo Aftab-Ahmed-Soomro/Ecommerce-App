@@ -65,10 +65,10 @@ const BannerProduct = () => {
       <div className='h-56 md:h-[266px] w-full bg-slate-200 relative'>
         <div className='absolute z-10 h-full w-full md:flex items-center hidden'>
             <div className='w-full flex justify-between text-2xl'>
-                <button onClick={prevImage} className='bg-white shadow-md rounded-full p-1 cursor-pointer'>
+                <button onClick={prevImage} className='bg-white shadow-lg rounded-full p-2 cursor-pointer hover:scale-110 transition-transform text-slate-700 z-10'>
                     <FaAngleLeft />
                 </button>
-                <button onClick={nextImage} className='bg-white shadow-md rounded-full p-1 cursor-pointer'>
+                <button onClick={nextImage} className='bg-white shadow-lg rounded-full p-2 cursor-pointer hover:scale-110 transition-transform text-slate-700 z-10'>
                     <FaAngleRight />
                 </button>
             </div>
