@@ -68,13 +68,16 @@ const Header = () => {
       <div className="flex items-center h-full container mx-auto px-4 justify-between">
         <div>
           <Link to={"/"}>
-            <img
+            <div className="flex items-center gap-1">
+              <span className="text-2xl font-bold text-slate-800 font-sans tracking-tight">SOOMRO</span>
+              <span className="text-2xl font-bold text-red-600 font-sans tracking-tight">GROUP</span>
+            </div>
+            {/* <img
               className="rounded-xl"
               src={logo}
               width={50}
               height={50}
-            ></img>
-            {/* <h1 className="fon">Aftab</h1> */}
+            ></img> */}
           </Link>
         </div>
 
