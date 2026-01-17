@@ -1,5 +1,4 @@
-export const backendDomain = "http://localhost:8000"
-// export const backendDomain = "https://ecommerce-backend-two-olive.vercel.app"
+export const backendDomain = import.meta.env.VITE_BACKEND_URL;
 
 const summaryApi = {
     signup : {
