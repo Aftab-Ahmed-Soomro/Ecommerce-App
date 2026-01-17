@@ -3,6 +3,7 @@ import summaryApi from '../common'
 import Context from '../context'
 import displayPKRCurrency from '../helpers/displayCurrency'
 import { MdDelete } from "react-icons/md";
+import { useSelector } from 'react-redux';
 
 import axiosInstance from "../api/axios";
 
@@ -10,6 +11,7 @@ const Cart = () => {
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(false)
     const context = useContext(Context)
+    const user = useSelector(state => state?.user?.user)
     const loadingCart = new Array(context.cartProductCount).fill(null)
 
     const fetchData = async() => {
@@ -34,7 +36,7 @@ const Cart = () => {
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [user?._id])
 
     // ... (keep handleLoading) ...
 
