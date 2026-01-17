@@ -1,23 +1,18 @@
 import summaryApi from "../common";
 
+import axiosInstance from "../api/axios";
+
 const fetchCategoryWiseProduct = async(category) => {
     try {
-        const response = await fetch(summaryApi.categoryWiseProduct.url,{
-            method : summaryApi.categoryWiseProduct.method,
-            headers : {
-                "content-type" : "application/json"
-            },
-            body : JSON.stringify({
-                category : category
-            })
-        })
+        const response = await axiosInstance({
+            url: summaryApi.categoryWiseProduct.url,
+            method: summaryApi.categoryWiseProduct.method,
+            data: {
+                category: category
+            }
+        });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const dataResponse = await response.json();
-        return dataResponse;
+        return response.data;
     } catch (error) {
         console.error("Error fetching category products:", error);
         return {

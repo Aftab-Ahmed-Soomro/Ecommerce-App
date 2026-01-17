@@ -4,6 +4,8 @@ import productCategory from '../helpers/productCategory';
 import VerticalCard from '../components/VerticalCard';
 import summaryApi from '../common';
 
+import axiosInstance from "../api/axios";
+
 const CategoryProduct = () => {
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(false)
@@ -31,18 +33,20 @@ const CategoryProduct = () => {
     // {params?.categoryName}
 
     const fetchData = async() => {
-      const response = await fetch(summaryApi.filterProduct.url,{
-        method : summaryApi.filterProduct.method,
-        headers : {
-          'content-type' : 'application/json'
-        },
-        body : JSON.stringify({
-          category : filterCategoryList
+      try {
+        const response = await axiosInstance({
+          url: summaryApi.filterProduct.url,
+          method: summaryApi.filterProduct.method,
+          data: {
+            category: filterCategoryList
+          }
         })
-      })
 
-      const responseData = await response.json()
-      setData(responseData?.data || [])
+        const responseData = response.data;
+        setData(responseData?.data || [])
+      } catch (error) {
+        console.error("Error fetching filtered products:", error);
+      }
 
       // console.log("responseData",responseData)
     }

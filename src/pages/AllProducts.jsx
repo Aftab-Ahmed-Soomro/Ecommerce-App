@@ -3,17 +3,26 @@ import UploadProduct from '../components/UploadProduct'
 import summaryApi from '../common';
 import AdminProductCard from '../components/AdminProductCard';
 
+import axiosInstance from "../api/axios";
+
 const AllProducts = () => {
   const [openUploadProduct,setOpenUploadProduct] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
 
   const fetchAllProducts = async() => {
-    const response = await fetch(summaryApi.allProduct.url);
-    const dataResponse = await response.json();
+    try {
+        const response = await axiosInstance({
+            url: summaryApi.allProduct.url,
+            method: summaryApi.allProduct.method // Assuming allProduct summary has method, usually 'get'
+        });
+        const dataResponse = response.data;
 
-    console.log("data response", dataResponse);
+        console.log("data response", dataResponse);
 
-    setAllProducts(dataResponse?.data || []);
+        setAllProducts(dataResponse?.data || []);
+    } catch (error) {
+        console.error("Error fetching all products:", error);
+    }
   }
 
   useEffect(() => {

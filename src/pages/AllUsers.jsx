@@ -5,6 +5,8 @@ import moment from 'moment'
 import { MdModeEdit } from "react-icons/md";
 import ChangeUserRole from '../components/ChangeUserRole'
 
+import axiosInstance from "../api/axios";
+
 const AllUsers = () => {
   const [allUser,setAllUser] = useState([])
   const [openUpdateRole,setOpenUpdateRole] = useState(false)
@@ -16,22 +18,27 @@ const AllUsers = () => {
   })
 
   const fetchAllUsers = async() => {
-    const fetchData = await fetch(summaryApi.allUser.url,{
-      method : summaryApi.allUser.method,
-      credentials : 'include'
-    })
+    try {
+        const response = await axiosInstance({
+            url: summaryApi.allUser.url,
+            method: summaryApi.allUser.method
+        })
 
-    const dataResponse = await fetchData.json();
+        const dataResponse = response.data;
 
-    if (dataResponse.success) {
-      setAllUser(dataResponse.data);
+        if (dataResponse.success) {
+        setAllUser(dataResponse.data);
+        }
+
+        if (dataResponse.error) {
+        toast.error(dataResponse.message);
+        }
+
+        console.log(dataResponse);
+    } catch (error) {
+        console.error("Error fetching all users:", error);
+        toast.error("Failed to load users");
     }
-
-    if (dataResponse.error) {
-      toast.error(dataResponse.message);
-    }
-
-    console.log(dataResponse);
   }
 
   useEffect(()=> {

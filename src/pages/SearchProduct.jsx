@@ -3,6 +3,8 @@ import { useLocation, useParams } from 'react-router-dom'
 import summaryApi from '../common';
 import VerticalCard from '../components/VerticalCard';
 
+import axiosInstance from "../api/axios";
+
 const SearchProduct = () => {
     const query = useLocation();
     const [data,setData] = useState([]);
@@ -12,11 +14,20 @@ const SearchProduct = () => {
 
     const fetchProduct = async() => {
         setLoading(true);
-        const response = await fetch(summaryApi.searchProduct.url+query.search)
-        const responseData = await response.json()
-        setLoading(false);
+        try {
+            // Using existing logic of appending query string to URL
+            const response = await axiosInstance({
+                url: summaryApi.searchProduct.url + query.search,
+                method: summaryApi.searchProduct.method
+            })
+            const responseData = response.data;
+            setLoading(false);
 
-        setData(responseData.data)
+            setData(responseData.data)
+        } catch (error) {
+             console.error("Error fetching search results:", error);
+             setLoading(false);
+        }
 
         // console.log("responseData",responseData);
     }

@@ -8,36 +8,44 @@ import Context from './context';
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from './store/userSlice';
 
+import axiosInstance from './api/axios';
+
 const App = () => {
 
   const dispatch = useDispatch();
   const [cartProductCount, setcartProductCount] = useState(0);
 
   const fetchUserDetails = async() => {
-    const dataResponse = await fetch(summaryApi.current_user.url,{
-      method : summaryApi.current_user.method,
-      credentials : "include"
-    })
+    try {
+        const response = await axiosInstance({
+            url: summaryApi.current_user.url,
+            method: summaryApi.current_user.method
+        })
+        const dataApi = response.data;
 
-    const dataApi = await dataResponse.json()
-
-    if (dataApi.success) {
-      dispatch(setUserDetails(dataApi.data))
+        if (dataApi.success) {
+        dispatch(setUserDetails(dataApi.data))
+        }
+    } catch (error) {
+        console.error("Error fetching user details:", error);
     }
 
     // console.log("user-data", dataResponse);
   }
 
   const fetchUserAddToCart = async() => {
-    const dataResponse = await fetch(summaryApi.addToCartProductCount.url,{
-      method : summaryApi.addToCartProductCount.method,
-      credentials : "include"
-    })
+    try {
+        const response = await axiosInstance({
+            url: summaryApi.addToCartProductCount.url,
+            method: summaryApi.addToCartProductCount.method
+        })
+        const dataApi = response.data;
 
-    const dataApi = await dataResponse.json()
-
-    console.log("dataApi",dataApi)
-    setcartProductCount(dataApi?.data?.count)
+        console.log("dataApi",dataApi)
+        setcartProductCount(dataApi?.data?.count)
+    } catch (error) {
+        console.error("Error fetching cart count:", error);
+    }
   }
 
   useEffect(()=> {

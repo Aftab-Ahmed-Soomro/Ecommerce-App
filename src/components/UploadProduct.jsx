@@ -8,6 +8,8 @@ import summaryApi from '../common';
 import {toast} from 'react-toastify'
 import DisplayImage from './DisplayImage';
 
+import axiosInstance from "../api/axios";
+
 const UploadProduct = ({onClose,fetchData}) => {
   const [data, setData] = useState({
     productName : "",
@@ -68,29 +70,32 @@ const UploadProduct = ({onClose,fetchData}) => {
   }
 
   { /* submit form */ }
+  { /* submit form */ }
   const handleSubmit = async(e) => {
     e.preventDefault();
     // console.log("data",data);
 
-    const response = await fetch(summaryApi.uploadProduct.url,{
-      method : summaryApi.uploadProduct.method,
-      credentials : 'include',
-      headers : {
-        'content-type' : 'application/json'
-      },
-      body : JSON.stringify(data) 
-    })
+    try {
+      const response = await axiosInstance({
+        url: summaryApi.uploadProduct.url,
+        method: summaryApi.uploadProduct.method,
+        data: data
+      })
 
-    const responseData = await response.json();
+      const responseData = response.data;
 
-    if(responseData.success) {
-      toast.success(responseData?.message);
-      onClose();
-      fetchData()
-    }
+      if(responseData.success) {
+        toast.success(responseData?.message);
+        onClose();
+        fetchData()
+      }
 
-    if(responseData.error) { 
-      toast.error(responseData?.message);
+      if(responseData.error) { 
+        toast.error(responseData?.message);
+      }
+    } catch (error) {
+      console.error("Error uploading product:", error);
+      toast.error(error.message || "Failed to upload product");
     }
   }
 

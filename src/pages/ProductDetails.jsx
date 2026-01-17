@@ -8,6 +8,8 @@ import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay
 import addToCart from '../helpers/addToCart';
 import Context from '../context';
 
+import axiosInstance from "../api/axios";
+
 const ProductDetails = () => {
     const [data,setData] = useState({
         productName : "",
@@ -36,20 +38,23 @@ const ProductDetails = () => {
 
     const fetchProductDetails = async() => {
         setLoading(true)
-        const response = await fetch(summaryApi.productDetails.url,{
-            method : summaryApi.productDetails.method,
-            headers : {
-                "content-type" : "application/json"
-            },
-            body : JSON.stringify({
-                productId : params?.id
+        try {
+            const response = await axiosInstance({
+                url: summaryApi.productDetails.url,
+                method: summaryApi.productDetails.method,
+                data: {
+                    productId: params?.id
+                }
             })
-        })
-         
-        setLoading(false)
-        const dataResponse = await response.json();
-        setData(dataResponse?.data)
-        setActiveImage(dataResponse?.data.productImage[0])
+            
+            setLoading(false)
+            const dataResponse = response.data;
+            setData(dataResponse?.data)
+            setActiveImage(dataResponse?.data.productImage[0])
+        } catch (error) {
+             console.error("Error fetching product details:", error);
+             setLoading(false);
+        }
     }
 
     // console.log("data",data);

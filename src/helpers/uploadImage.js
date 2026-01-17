@@ -1,3 +1,5 @@
+import axios from "axios"
+
 const url = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME_CLOUDINARY}/image/upload`
 
 const uploadImage = async(image) => {
@@ -6,15 +8,9 @@ const uploadImage = async(image) => {
     formData.append("upload_preset", "mern_product")
     formData.append("cloud_name", import.meta.env.VITE_CLOUD_NAME_CLOUDINARY)
 
-    const dataResponse = await fetch(url,{
-        method : "post",
-        body : formData
-    })
+    const dataResponse = await axios.post(url, formData)
 
-    // const uploadedImage = dataResponse.json();
-    // console.log(uploadedImage);
-
-    return dataResponse.json()
+    return dataResponse.data
 }
 
 export default uploadImage;

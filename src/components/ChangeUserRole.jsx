@@ -4,6 +4,8 @@ import { IoMdClose } from "react-icons/io";
 import summaryApi from '../common';
 import { toast } from 'react-toastify';
 
+import axiosInstance from "../api/axios";
+
 const ChangeUserRole = ({
     name,
     email,
@@ -20,27 +22,28 @@ const ChangeUserRole = ({
     }
 
     const updateUserRole = async() => {
-        const fetchResponse = await fetch(summaryApi.updateUser.url,{
-            method : summaryApi.updateUser.method,
-            credentials : 'include',
-            headers : {
-                'content-type' : 'application/json'
-            },
-            body : JSON.stringify({
-                userId : userId,
-                role : userRole
+        try {
+            const response = await axiosInstance({
+                url: summaryApi.updateUser.url,
+                method: summaryApi.updateUser.method,
+                data: {
+                    userId: userId,
+                    role: userRole
+                }
             })
-        })
 
-        const dataResponse = await fetchResponse.json()
+            const dataResponse = response.data
 
-        if (dataResponse.success) {
-            toast.success(dataResponse.message)
-            onClose() 
-            callFunc()
+            if (dataResponse.success) {
+                toast.success(dataResponse.message)
+                onClose() 
+                callFunc()
+            }
+            console.log("dataResponse",dataResponse);
+        } catch (error) {
+             console.error("Error updating user role:", error);
+             toast.error("Failed to update user role");
         }
-
-        console.log("dataResponse",dataResponse);
     }
   return (
     <div className='fixed top-0 bottom-0 left-0 right-0 w-full h-full z-10 flex justify-center items-center bg-slate-200/50'>

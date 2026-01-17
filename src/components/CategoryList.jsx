@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import summaryApi from '../common';
 import { Link } from 'react-router-dom';
 
+import axiosInstance from "../api/axios";
+
 const CategoryList = () => {
     const [categoryProduct, setCategoryProduct] = useState([]);
     const [loading,setLoading] = useState(false);
@@ -10,10 +12,18 @@ const CategoryList = () => {
 
     const fetchCategoryProduct = async() => {
         setLoading(true);
-        const response = await fetch(summaryApi.categoryProduct.url);
-        const dataResponse = await response.json();
-        setLoading(false);
-        setCategoryProduct(dataResponse.data);
+        try {
+            const response = await axiosInstance({
+                url: summaryApi.categoryProduct.url,
+                method: summaryApi.categoryProduct.method
+            });
+            const dataResponse = response.data;
+            setLoading(false);
+            setCategoryProduct(dataResponse.data);
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+            setLoading(false);
+        }
     }
 
     useEffect(()=> {

@@ -7,6 +7,8 @@ import summaryApi from '../common';
 import { toast } from 'react-toastify';
 import Context from '../context';
 
+import axiosInstance from "../api/axios";
+
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);  
     
@@ -40,26 +42,28 @@ const Login = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        const dataResponse = await fetch(summaryApi.signin.url,{
-            method : summaryApi.signin.method,
-            credentials : "include",
-            headers : {
-                "content-type" : "application/json"
-            },
-            body : JSON.stringify(data)
-        })
+        try {
+            const response = await axiosInstance({
+                url: summaryApi.signin.url,
+                method: summaryApi.signin.method,
+                data: data
+            })
 
-        const dataApi = await dataResponse.json();
+            const dataApi = response.data;
 
-        if(dataApi.success) {
-            toast.success(dataApi.message)
-            navigate('/');
-            fetchUserDetails();
-            fetchUserAddToCart()
-        }
-        
-        if(dataApi.error) {
-            toast.error(dataApi.message);
+            if(dataApi.success) {
+                toast.success(dataApi.message)
+                navigate('/');
+                fetchUserDetails();
+                fetchUserAddToCart()
+            }
+            
+            if(dataApi.error) {
+                toast.error(dataApi.message);
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            toast.error(error.message || "Login failed");
         }
     }
 

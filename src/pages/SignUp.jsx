@@ -6,6 +6,7 @@ import { data, Link, useNavigate } from "react-router-dom";
 import imageToBase64 from '../helpers/imageToBase64';
 import summaryApi from '../common';
 import { toast } from 'react-toastify';
+import axiosInstance from "../api/axios";
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);  
@@ -32,31 +33,32 @@ const SignUp = () => {
             })
             // console.log("data login", data)
         }
-        
+
         const handleSubmit = async(e) => {
             e.preventDefault()
 
             if (data.password === data.confirmPassword) {
-                const dataResponse = await fetch(summaryApi.signup.url,{
-                    method : summaryApi.signup.method,
-                    headers : {
-                        "content-type" : "application/json"
-                    },
-                    body : JSON.stringify(data)
-                })
+                try {
+                     const response = await axiosInstance({
+                        url: summaryApi.signup.url,
+                        method: summaryApi.signup.method,
+                        data: data
+                    })
     
-                const dataApi = await dataResponse.json();
+                    const dataApi = response.data;
 
-                if(dataApi.success) {
-                    toast.success(dataApi.message)
-                    navigate("/login"); 
+                    if(dataApi.success) {
+                        toast.success(dataApi.message)
+                        navigate("/login"); 
+                    }
+
+                    if(dataApi.error) {
+                        toast.error(dataApi.message)
+                    }
+                } catch (error) {
+                    console.error("Signup error:", error);
+                    toast.error(error.message || "Signup failed");
                 }
-
-                if(dataApi.error) {
-                    toast.error(dataApi.message)
-                }
-
-                // console.log("data",dataApi);
             }
             else {
                 toast.error("Password and Confirm Password isn't same");

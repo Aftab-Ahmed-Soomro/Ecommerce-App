@@ -1,22 +1,21 @@
 import summaryApi from "../common";
 import {toast} from 'react-toastify'
 
+import axiosInstance from "../api/axios";
+
 const addToCart = async(e,id) => {
     e?.stopPropagation(); 
     e?.preventDefault();
 
-    const response = await fetch(summaryApi.addToCartProduct.url,{
-        method : summaryApi.addToCartProduct.method,
-        credentials : 'include',
-        headers : {
-            "content-type" : "application/json"
-        },
-        body : JSON.stringify({
-            productId : id
-        })
-    })
+    const response = await axiosInstance({
+        url: summaryApi.addToCartProduct.url,
+        method: summaryApi.addToCartProduct.method,
+        data: {
+            productId: id
+        }
+    });
 
-    const responseData = await response.json()
+    const responseData = response.data
 
     if(responseData.success) {
         toast.success(responseData.message);

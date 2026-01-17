@@ -9,6 +9,8 @@ import summaryApi from "../common";
 import {toast} from 'react-toastify'
 import { setUserDetails } from "../store/userSlice";
 import ROLE from "../common/role";
+import axiosInstance from "../api/axios";
+
 import Context from "../context";
 
 const Header = () => {
@@ -22,26 +24,26 @@ const Header = () => {
   const searchQuery = URLSearch.getAll("q")
   const [search,setSearch] = useState(searchQuery)
 
-  // console.log("searchInput",searchInput?.search.split("=")[1]);
-
-  // console.log("user header", user);
-
   const handleLogout = async() => {
-    const fetchData = await fetch(summaryApi.logout_user.url, {
-      method : summaryApi.logout_user.method, 
-      credentials : "include"
-    });
-    console.log(summaryApi.logout_user.url);
+    try {
+      const response = await axiosInstance({
+        url: summaryApi.logout_user.url,
+        method: summaryApi.logout_user.method
+      });
 
-    const data = await fetchData.json();
+      const data = response.data;
 
-    if (data.success) {
-      toast.success(data.message)
-      dispatch(setUserDetails(null))
-      navigate('/')
-    }
-    if (data.error) {
-      toast.error(data.message)
+      if (data.success) {
+        toast.success(data.message)
+        dispatch(setUserDetails(null))
+        navigate('/')
+      }
+      if (data.error) {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error("Logout failed")
+      console.error(error)
     }
   } 
 

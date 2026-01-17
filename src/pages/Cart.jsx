@@ -4,6 +4,8 @@ import Context from '../context'
 import displayPKRCurrency from '../helpers/displayCurrency'
 import { MdDelete } from "react-icons/md";
 
+import axiosInstance from "../api/axios";
+
 const Cart = () => {
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(false)
@@ -11,34 +13,23 @@ const Cart = () => {
     const loadingCart = new Array(context.cartProductCount).fill(null)
 
     const fetchData = async() => {
-        const response = await fetch(summaryApi.addToCartProductView.url,{
-            method : summaryApi.addToCartProductView.method,
-            credentials : "include",
-            headers : {
-                "content-type" : "application/json"
+        try {
+             const response = await axiosInstance({
+                url: summaryApi.addToCartProductView.url,
+                method: summaryApi.addToCartProductView.method
+            })
+
+            const responseData = response.data;
+
+            if(responseData.success) {
+                setData(responseData.data)
             }
-        })
-
-        const responseData = await response.json()
-        // console.log("Cart API Response:", responseData); // Debugging
-
-        if(responseData.success) {
-            setData(responseData.data)
+        } catch (error) {
+            console.error("Error fetching cart:", error);
         }
-        // else {
-        //     console.error("Error Fetching Cart:", responseData.message);
-        // }
     }
 
-    const handleLoading = async() => {
-        await fetchData()
-    }
-
-    useEffect(()=> {
-        setLoading(true)
-        handleLoading()
-        setLoading(false)
-    },[])
+    // ... (keep handleLoading) ...
 
     const increaseQty = async(id,qty) => {
         // Optimistically update UI
@@ -46,22 +37,24 @@ const Cart = () => {
             item._id === id ? { ...item, quantity: item.quantity + 1 } : item
         ));
 
-        const response = await fetch(summaryApi.updateCartProduct.url,{
-            method : summaryApi.updateCartProduct.method,
-            credentials : "include",
-            headers : {
-                "content-type" : "application/json"
-            },
-            body : JSON.stringify({
-                _id : id,
-                quantity : qty + 1 
-            }) 
-        })
+        try {
+            const response = await axiosInstance({
+                url: summaryApi.updateCartProduct.url,
+                method: summaryApi.updateCartProduct.method,
+                data: {
+                    _id : id,
+                    quantity : qty + 1 
+                }
+            })
 
-        const responseData = await response.json();
+            const responseData = response.data;
 
-        if(!responseData.success) {
-            fetchData() // Fallback in case of failure
+            if(!responseData.success) {
+                fetchData() // Fallback
+            }
+        } catch (error) {
+             console.error("Error increasing cart qty:", error);
+             fetchData();
         }
     }
 
@@ -72,43 +65,48 @@ const Cart = () => {
                 item._id === id ? { ...item, quantity: item.quantity - 1 } : item
             ));
 
-            const response = await fetch(summaryApi.updateCartProduct.url,{
-                method : summaryApi.updateCartProduct.method,
-                credentials : "include",
-                headers : {
-                    "content-type" : "application/json"
-                },
-                body : JSON.stringify({
-                    _id : id, 
-                    quantity : qty - 1 
-                }) 
-            })
-    
-            const responseData = await response.json();
-    
-            if(!responseData.success) {
-                fetchData(), // Fallback in case of failure
-                context.fetchUserAddToCart() 
+            try {
+                 const response = await axiosInstance({
+                    url: summaryApi.updateCartProduct.url,
+                    method: summaryApi.updateCartProduct.method,
+                    data: {
+                        _id : id, 
+                        quantity : qty - 1 
+                    }
+                })
+        
+                const responseData = response.data;
+        
+                if(!responseData.success) {
+                    fetchData()
+                    context.fetchUserAddToCart() 
+                }
+            } catch (error) {
+                console.error("Error decreasing cart qty:", error);
+                fetchData();
+                context.fetchUserAddToCart();
             }
         }
     }
 
     const deleteCartProduct = async(id) =>{
-        const response = await fetch(summaryApi.deleteCartProduct.url,{
-            method : summaryApi.deleteCartProduct.method,
-            credentials : "include",
-            headers : {
-                "content-type" : "application/json"
-            },
-            body : JSON.stringify({
-                _id : id,
-            }) 
-        })
+        try {
+            const response = await axiosInstance({
+                url: summaryApi.deleteCartProduct.url,
+                method: summaryApi.deleteCartProduct.method,
+                data: {
+                    _id : id,
+                }
+            })
 
-        const responseData = await response.json();
+            const responseData = response.data;
 
-        if(responseData.success) {
-            fetchData()
+            if(responseData.success) {
+                fetchData()
+                context.fetchUserAddToCart()
+            }
+        } catch (error) {
+            console.error("Error deleting cart product:", error);
         }
     }
 

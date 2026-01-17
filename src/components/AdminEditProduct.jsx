@@ -6,6 +6,7 @@ import DisplayImage from './DisplayImage';
 import { MdDelete } from "react-icons/md";
 import summaryApi from '../common';
 import {toast} from 'react-toastify'
+import axiosInstance from "../api/axios";
 
 const AdminEditProduct = ({
     onClose,
@@ -72,29 +73,32 @@ const AdminEditProduct = ({
   }
 
   { /* submit form */ }
+  { /* submit form */ }
   const handleSubmit = async(e) => {
     e.preventDefault();
     // console.log("data",data);
 
-    const response = await fetch(summaryApi.updateProduct.url,{
-      method : summaryApi.updateProduct.method,
-      credentials : 'include',
-      headers : {
-        'content-type' : 'application/json'
-      },
-      body : JSON.stringify(data) 
-    })
+    try {
+      const response = await axiosInstance({
+        url: summaryApi.updateProduct.url,
+        method: summaryApi.updateProduct.method,
+        data: data
+      })
 
-    const responseData = await response.json();
+      const responseData = response.data;
 
-    if(responseData.success) {
-      toast.success(responseData?.message);
-      onClose();
-      fetchData();
-    }
+      if(responseData.success) {
+        toast.success(responseData?.message);
+        onClose();
+        fetchData();
+      }
 
-    if(responseData.error) { 
-      toast.error(responseData?.message);
+      if(responseData.error) { 
+        toast.error(responseData?.message);
+      }
+    } catch (error) {
+      console.error("Error updating product:", error);
+      toast.error(error.message || "Failed to update product");
     }
   }
 
