@@ -10,8 +10,6 @@ const SearchProduct = () => {
     const [data,setData] = useState([]);
     const [loading,setLoading] = useState(false);
 
-    console.log("query",query.search);
-
     const fetchProduct = async() => {
         setLoading(true);
         try {
@@ -28,8 +26,6 @@ const SearchProduct = () => {
              console.error("Error fetching search results:", error);
              setLoading(false);
         }
-
-        // console.log("responseData",responseData);
     }
 
     useEffect(()=> {

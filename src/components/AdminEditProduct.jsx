@@ -40,9 +40,6 @@ const AdminEditProduct = ({
   const handleUploadProduct = async(e) => {
     const file = e.target.files[0]
 
-    // setUploadProductImageInput(file.name);
-    // console.log("file",file)
-
     const uploadImageCloudinary = await uploadImage(file)
 
     setData((preve)=> {
@@ -51,16 +48,9 @@ const AdminEditProduct = ({
         productImage : [ ...preve.productImage, uploadImageCloudinary.url ]
       }
     })
-
-    // console.log("upload image",uploadImageCloudinary)
-    // console.log("upload image",uploadImageCloudinary.url);
   }
 
   const handleDeleteProductImage = async(index) => {
-    console.log("image index",index);
-
-    // const newProductImage = {...data.productImage}
-    // newProductImage.splice(index,1);
 
     const newProductImage = data.productImage.filter((_, i) => i !== index); // Creates a new array without the deleted image
 
@@ -76,7 +66,6 @@ const AdminEditProduct = ({
   { /* submit form */ }
   const handleSubmit = async(e) => {
     e.preventDefault();
-    // console.log("data",data);
 
     try {
       const response = await axiosInstance({

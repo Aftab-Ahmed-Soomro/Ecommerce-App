@@ -18,7 +18,6 @@ const ChangeUserRole = ({
 
     const handleOnChangeSelect = (e) => {
         setUserRole(e.target.value);
-        console.log(e.target.value);
     }
 
     const updateUserRole = async() => {
@@ -39,7 +38,6 @@ const ChangeUserRole = ({
                 onClose() 
                 callFunc()
             }
-            console.log("dataResponse",dataResponse);
         } catch (error) {
              console.error("Error updating user role:", error);
              toast.error("Failed to update user role");

@@ -110,8 +110,6 @@ const Cart = () => {
         }
     }
 
-    // console.log("cart data",data)
-
     const totalQty = data.reduce((prevValue,currValue)=> prevValue + currValue.quantity, 0)
     const totalPrice = data.reduce((prevValue,currValue)=> prevValue + (currValue.quantity * currValue?.productId?.sellingPrice),0)
   return (

@@ -29,8 +29,6 @@ const App = () => {
     } catch (error) {
         console.error("Error fetching user details:", error);
     }
-
-    // console.log("user-data", dataResponse);
   }
 
   const fetchUserAddToCart = async() => {
@@ -41,7 +39,6 @@ const App = () => {
         })
         const dataApi = response.data;
 
-        console.log("dataApi",dataApi)
         setcartProductCount(dataApi?.data?.count)
     } catch (error) {
         console.error("Error fetching cart count:", error);

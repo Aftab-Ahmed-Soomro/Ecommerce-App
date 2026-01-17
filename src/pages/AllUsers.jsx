@@ -33,8 +33,6 @@ const AllUsers = () => {
         if (dataResponse.error) {
         toast.error(dataResponse.message);
         }
-
-        console.log(dataResponse);
     } catch (error) {
         console.error("Error fetching all users:", error);
         toast.error("Failed to load users");

@@ -31,7 +31,6 @@ const SignUp = () => {
                     [name] : value
                 }
             })
-            // console.log("data login", data)
         }
 
         const handleSubmit = async(e) => {
@@ -75,12 +74,6 @@ const SignUp = () => {
                     profilePic : imagePic
                 }
             })
-
-            // Gives the picture in base64 format
-            // console.log("image", imagePic);
-
-            // Gives the file name 
-            // console.log("file", file);
         }
 
   return (

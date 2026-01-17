@@ -21,11 +21,9 @@ const Login = () => {
 
     // w/o destructured
     // const generalContext = useContext(Context);
-    // console.log("generalContext",generalContext.fetchUserDetails());
 
     // w destructured
     const { fetchUserDetails,fetchUserAddToCart } = useContext(Context);
-    // console.log("generalContext",fetchUserDetails());
 
     const handleOnChange = (e) => {
         const {name, value} = e.target;
@@ -36,7 +34,6 @@ const Login = () => {
                 [name] : value
             }
         })
-        console.log("data login", data);
     }
     
     const handleSubmit = async(e) => {

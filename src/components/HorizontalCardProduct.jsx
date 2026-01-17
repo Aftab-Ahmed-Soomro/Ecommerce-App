@@ -27,8 +27,6 @@ const HorizontalCardProduct = ({category, heading}) => {
         const categoryProduct = await fetchCategoryWiseProduct(category);
         setLoading(false);
 
-        console.log("Horizontal Data",categoryProduct?.data);
-        
         if (categoryProduct?.success) {
           setData(categoryProduct?.data || []);
         } else {

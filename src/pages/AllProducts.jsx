@@ -17,8 +17,6 @@ const AllProducts = () => {
         });
         const dataResponse = response.data;
 
-        console.log("data response", dataResponse);
-
         setAllProducts(dataResponse?.data || []);
     } catch (error) {
         console.error("Error fetching all products:", error);

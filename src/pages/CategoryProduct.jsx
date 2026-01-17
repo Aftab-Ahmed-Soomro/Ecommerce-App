@@ -21,16 +21,9 @@ const CategoryProduct = () => {
       urlCategoryListObject[el] = true
     })
 
-    // console.log("urlCategoryListObject",urlCategoryListObject)
-    // console.log("urlCategoryListInArray",urlCategoryListInArray)
-
     const [selectCategory,setSelectCategory] = useState(urlCategoryListObject)
     const [filterCategoryList,setFilterCategoryList] = useState([])
     const [sortBy,setSortBy] = useState("")
-    console.log("sortBy",sortBy)
-    // console.log("category",params.categoryName);
-
-    // {params?.categoryName}
 
     const fetchData = async() => {
       try {
@@ -47,8 +40,6 @@ const CategoryProduct = () => {
       } catch (error) {
         console.error("Error fetching filtered products:", error);
       }
-
-      // console.log("responseData",responseData)
     }
 
     const handleSelectCategory = (e) => {
@@ -60,11 +51,7 @@ const CategoryProduct = () => {
           [value] : checked
         }
       })
-
-      // console.log("selected",name,value,checked)
     }
-
-    // console.log("selectCategory",selectCategory)
 
     useEffect(() => {
       fetchData()
@@ -90,11 +77,7 @@ const CategoryProduct = () => {
         return `category=${el}&&`
       })
 
-      // console.log("urlFormat",urlFormat.join(""))
-
       navigate("/product-category?"+urlFormat.join(""))
-
-      // console.log("selected c", arrayOfCategory)
     },[selectCategory])
 
     const handleOnChangeSortBy = (e) => {

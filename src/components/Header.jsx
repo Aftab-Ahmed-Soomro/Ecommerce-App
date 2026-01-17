@@ -47,10 +47,6 @@ const Header = () => {
     }
   } 
 
-  // console.log("Aftab",user?._id);
-
-  // console.log("header add to cart count", context);
-
   const handleSearch = (e) => {
     const {value} = e.target
 
