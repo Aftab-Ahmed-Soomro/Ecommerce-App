@@ -61,25 +61,25 @@ const HorizontalCardProduct = ({category, heading}) => {
   return (
     <div className='container mx-auto px-4 my-6 relative'>
 
-        <h2 className='text-2xl font-semibold pb-4'>{heading}</h2>
+        <h2 className='text-2xl font-bold pb-4 text-slate-800 border-b-2 border-red-600 inline-block mb-6'>{heading}</h2>
 
         {error && (
           <p className='text-red-600 text-center py-4'>{error}</p>
         )}
 
-        <div ref={scrollElement} className='flex items-center gap-4 md:gap-6 overflow-scroll scrollBar-none transition-all'>
-          <button onClick={scrollLeft} className='bg-white shadow-md rounded-full p-1 cursor-pointer absolute left-0 text-lg hidden md:block'>
+        <div ref={scrollElement} className='flex items-center gap-4 md:gap-6 overflow-x-scroll scrollBar-none transition-all py-4'>
+          <button onClick={scrollLeft} className='bg-white shadow-lg rounded-full p-2 cursor-pointer absolute left-1 text-2xl z-10 hidden md:block hover:scale-110 transition-transform text-slate-700'>
               <FaAngleLeft />
           </button>
-          <button onClick={scrollRight} className='bg-white shadow-md rounded-full p-1 cursor-pointer absolute right-0 text-lg hidden md:block'>
+          <button onClick={scrollRight} className='bg-white shadow-lg rounded-full p-2 cursor-pointer absolute right-1 text-2xl z-10 hidden md:block hover:scale-110 transition-transform text-slate-700'>
               <FaAngleRight />
           </button>
           {
             loading ? (
               loadingList.map((product,index)=> {
                 return (
-                  <div key={index} className='w-full min-w-[300px] md:min-w-[340px] max-w-[300px] md:max-w-[340px] h-36 bg-white rounded-sm shadow flex'>
-                    <div className='bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px] animate-pulse'>
+                  <div key={index} className='w-full min-w-[320px] md:min-w-[380px] max-w-[320px] md:max-w-[380px] h-36 bg-white rounded-xl shadow flex'>
+                    <div className='bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px] animate-pulse rounded-l-xl'>
                         {/* <img src={product.productImage[0]} className='object-scale-down h-full hover:scale-110 transition-all cursor-pointer mix-blend-multiply' /> */}
                     </div>
                     <div className='p-4 grid w-full gap-2'>
@@ -97,18 +97,18 @@ const HorizontalCardProduct = ({category, heading}) => {
             ) : (
               safeData.map((product,index)=> {
                 return (
-                  <Link key={product?._id || index} to={"/product/"+product?._id} className='w-full min-w-[300px] md:min-w-[340px] max-w-[300px] md:max-w-[340px] h-36 bg-white rounded-sm shadow flex'>
-                    <div className='bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px]'>
-                        <img src={product?.productImage?.[0]} className='object-scale-down h-full hover:scale-110 transition-all cursor-pointer mix-blend-multiply' />
+                  <Link key={product?._id || index} to={"/product/"+product?._id} className='w-full min-w-[320px] md:min-w-[380px] max-w-[320px] md:max-w-[380px] h-40 bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex border border-slate-100 overflow-hidden group'>
+                    <div className='bg-slate-50 h-full p-4 min-w-[120px] md:min-w-[145px] group-hover:bg-white transition-colors flex justify-center items-center'>
+                        <img src={product?.productImage?.[0]} className='object-scale-down h-full hover:scale-110 transition-all duration-300 cursor-pointer mix-blend-multiply' />
                     </div>
-                    <div className='p-4 grid'>
-                        <h2 className='font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-black'>{product?.productName}</h2>
-                        <p className='capitalize text-slate-500'>{product?.category}</p>
-                        <div className='flex gap-3'>
-                          <p className='text-red-600 font-medium'>{displayPKRCurrency(product?.sellingPrice)}</p>
-                          <p className='text-slate-500 line-through'>{displayPKRCurrency(product?.price)}</p>
+                    <div className='p-4 grid w-full gap-1'>
+                        <h2 className='font-semibold text-base md:text-lg text-ellipsis line-clamp-1 text-slate-800'>{product?.productName}</h2>
+                        <p className='capitalize text-slate-400 text-sm'>{product?.category}</p>
+                        <div className='flex gap-3 items-center'>
+                          <p className='text-red-600 font-bold text-lg'>{displayPKRCurrency(product?.sellingPrice)}</p>
+                          <p className='text-slate-400 line-through text-sm'>{displayPKRCurrency(product?.price)}</p>
                         </div>
-                        <button onClick={(e)=>handleAddToCart(e,product?._id)} className='text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-0.5 rounded-full cursor-pointer'>Add To Cart</button>
+                        <button onClick={(e)=>handleAddToCart(e,product?._id)} className='text-sm bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white px-3 py-1.5 rounded-full cursor-pointer font-medium shadow-sm hover:shadow-md transition-all active:scale-95'>Add To Cart</button>
                     </div>
                   </Link>
                 )
@@ -116,7 +116,6 @@ const HorizontalCardProduct = ({category, heading}) => {
             )
           }
         </div>
-
     </div>
   )
 }

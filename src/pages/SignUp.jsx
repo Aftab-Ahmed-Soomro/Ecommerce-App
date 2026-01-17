@@ -85,27 +85,27 @@ const SignUp = () => {
 
   return (
     <section id='sign-up'>
-      <div className="mx-auto container p-4">
-        <div className='bg-white p-5 w-full max-w-sm mx-auto'>
-            <div className='w-20 h-20 mx-auto relative overflow-hidden rounded-full'>
+      <div className="mx-auto container p-4 mt-8">
+        <div className='bg-white p-8 w-full max-w-md mx-auto rounded-2xl shadow-xl border border-slate-100'>
+            <div className='w-20 h-20 mx-auto relative overflow-hidden rounded-full ring-4 ring-slate-100 mb-6 group'>
                 <div>
-                    <img src={data.profilePic || loginIcons} alt="Login icons" />
+                    <img src={data.profilePic || loginIcons} alt="Login icons" className='w-full h-full object-cover' />
                 </div>
                 <form>
                     <label>
-                        <div className='text-xs bg-slate-200 opacity-80 pb-4 pt-2 cursor-pointer text-center absolute bottom-0 w-full'>
+                        <div className='text-xs bg-slate-800 bg-opacity-80 text-white pb-4 pt-2 cursor-pointer text-center absolute bottom-0 w-full group-hover:bg-red-600 transition-colors'>
                             Upload Photo
                         </div>
                         <input className='hidden' type="file" onChange={handleUploadPic} />
                     </label>
                 </form>
             </div>
-            <form className='pt-6 flex flex-col gap-2' onSubmit={handleSubmit}>
-                <div className='grid'>
-                    <label>Name: </label>
-                    <div className='bg-slate-100 p-2'>
+            <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
+                <div className='grid gap-1'>
+                    <label className='text-slate-600 font-medium'>Name :</label>
+                    <div className='bg-slate-50 p-2 rounded-lg border border-slate-200 focus-within:border-red-500 focus-within:ring-2 focus-within:ring-red-100 transition-all'>
                         <input 
-                            className='w-full h-full outline-none bg-transparent' 
+                            className='w-full h-full outline-none bg-transparent placeholder:text-slate-400' 
                             type="text" 
                             name='name'
                             value={data.name}
@@ -115,11 +115,11 @@ const SignUp = () => {
                     </div>
                 </div>
 
-                <div className='grid'>
-                    <label>Email: </label>
-                    <div className='bg-slate-100 p-2'>
+                <div className='grid gap-1'>
+                    <label className='text-slate-600 font-medium'>Email :</label>
+                    <div className='bg-slate-50 p-2 rounded-lg border border-slate-200 focus-within:border-red-500 focus-within:ring-2 focus-within:ring-red-100 transition-all'>
                         <input 
-                            className='w-full h-full outline-none bg-transparent' 
+                            className='w-full h-full outline-none bg-transparent placeholder:text-slate-400' 
                             type="email" 
                             name='email'
                             value={data.email}
@@ -129,47 +129,18 @@ const SignUp = () => {
                     </div>
                 </div>
 
-                <div>
-                    <label>Password: </label>
-                    <div className='bg-slate-100 p-2 flex'>
+                <div className='grid gap-1'>
+                    <label className='text-slate-600 font-medium'>Password :</label>
+                    <div className='bg-slate-50 p-2 flex rounded-lg border border-slate-200 focus-within:border-red-500 focus-within:ring-2 focus-within:ring-red-100 transition-all'>
                         <input 
-                        className='w-full h-full outline-none bg-transparent' 
-                        type={showConfirmPassword ? "text" : "password"} 
-                        name='confirmPassword'
-                        value={data.confirmPassword}
-                        onChange={handleOnChange}
-                        required
-                        placeholder='enter confirm password...' />
-                        <div onClick={()=>setShowConfirmPassword((prev)=>!prev)} className='cursor-pointer text-xl'>
-                            <span>
-                                {
-                                    showConfirmPassword 
-                                    ? 
-                                    (
-                                        <FaEyeSlash /> 
-                                    )
-                                    :
-                                    (
-                                        <FaEye />   
-                                    )
-                                }
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <label>Confirm Password: </label>
-                    <div className='bg-slate-100 p-2 flex'>
-                        <input 
-                        className='w-full h-full outline-none bg-transparent' 
+                        className='w-full h-full outline-none bg-transparent placeholder:text-slate-400' 
                         type={showPassword ? "text" : "password"} 
                         name='password'
                         value={data.password}
                         onChange={handleOnChange}
                         required
                         placeholder='enter your password...' />
-                        <div onClick={()=>setShowPassword((prev)=>!prev)} className='cursor-pointer text-xl'>
+                        <div onClick={()=>setShowPassword((prev)=>!prev)} className='cursor-pointer text-xl text-slate-500 hover:text-red-600 transition-colors flex items-center'>
                             <span>
                                 {
                                     showPassword 
@@ -187,12 +158,41 @@ const SignUp = () => {
                     </div>
                 </div>
 
-                <button className='bg-red-600 text-white px-6 py-2 w-full max-w-[150px] rounded-full cursor-pointer hover:scale-110 transition-all mx-auto block mt-6'>
+                <div className='grid gap-1'>
+                    <label className='text-slate-600 font-medium'>Confirm Password :</label>
+                    <div className='bg-slate-50 p-2 flex rounded-lg border border-slate-200 focus-within:border-red-500 focus-within:ring-2 focus-within:ring-red-100 transition-all'>
+                        <input 
+                        className='w-full h-full outline-none bg-transparent placeholder:text-slate-400' 
+                        type={showConfirmPassword ? "text" : "password"} 
+                        name='confirmPassword'
+                        value={data.confirmPassword}
+                        onChange={handleOnChange}
+                        required
+                        placeholder='enter confirm password...' />
+                        <div onClick={()=>setShowConfirmPassword((prev)=>!prev)} className='cursor-pointer text-xl text-slate-500 hover:text-red-600 transition-colors flex items-center'>
+                            <span>
+                                {
+                                    showConfirmPassword 
+                                    ? 
+                                    (
+                                        <FaEyeSlash /> 
+                                    )
+                                    :
+                                    (
+                                        <FaEye />   
+                                    )
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <button className='bg-gradient-to-r from-red-600 to-red-500 text-white px-6 py-3 w-full max-w-[150px] rounded-full cursor-pointer hover:shadow-lg hover:scale-105 transition-all mx-auto block mt-4 font-bold tracking-wide active:scale-95'>
                     Sign Up
                 </button>
 
             </form>
-            <p className='my-5'>Already have an account ? <Link className='text-red-600 hover:text-red-700 hover:underline' to={"/login"}>Login</Link></p>
+            <p className='my-5 text-center text-slate-500'>Already have an account ? <Link className='text-red-600 hover:text-red-700 hover:underline font-medium' to={"/login"}>Login</Link></p>
         </div>
       </div>
     </section>
