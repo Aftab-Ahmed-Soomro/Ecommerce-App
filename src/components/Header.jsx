@@ -36,6 +36,7 @@ const Header = () => {
       if (data.success) {
         toast.success(data.message)
         dispatch(setUserDetails(null))
+        context.fetchUserAddToCart() // Reset cart count
         navigate('/')
       }
       if (data.error) {

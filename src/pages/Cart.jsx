@@ -13,6 +13,7 @@ const Cart = () => {
     const loadingCart = new Array(context.cartProductCount).fill(null)
 
     const fetchData = async() => {
+        setLoading(true)
         try {
              const response = await axiosInstance({
                 url: summaryApi.addToCartProductView.url,
@@ -26,8 +27,14 @@ const Cart = () => {
             }
         } catch (error) {
             console.error("Error fetching cart:", error);
+        } finally {
+            setLoading(false)
         }
     }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     // ... (keep handleLoading) ...
 
@@ -136,11 +143,11 @@ const Cart = () => {
                 ) : (
                     data.map((product) => {
                         return (
-                            <div key={product?._id+"Add To Cart Loading"} className='w-full bg-white h-32 my-4 border border-slate-100 rounded-xl shadow-sm flex relative hover:shadow-md transition-shadow'>
+                            <div key={product?._id+"Add To Cart Loading"} className='w-full bg-white h-36 my-4 border border-slate-100 rounded-xl shadow-sm flex relative hover:shadow-md transition-shadow'>
                                 <div className='w-32 h-full bg-slate-50 rounded-l-xl p-2 flex justify-center items-center'>
                                     <img src={product?.productId.productImage[0]} className='w-full h-full object-contain mix-blend-multiply hover:scale-110 transition-transform' />
                                 </div>
-                                <div className='px-4 py-2 w-full relative'>
+                                <div className='px-4 py-3 w-full relative'>
                                         {/* Delete Product */}
                                     <div className='flex justify-between items-start'>
                                         <h2 className='text-lg lg:text-xl font-semibold text-slate-800'>
