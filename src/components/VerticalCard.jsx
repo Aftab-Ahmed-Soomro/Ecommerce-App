@@ -15,14 +15,14 @@ const VerticalCard = ({loading,data = []}) => {
       await fetchUserAddToCart()
     }
   return (
-    <div className='grid grid-cols-[repeat(auto-fit,minmax(260px,300px))] justify-center md:justify-between md:gap-4 overflow-x-scroll scrollBar-none transition-all'>
+    <div className='grid grid-cols-[repeat(auto-fit,minmax(260px,300px))] justify-center gap-4 md:gap-6 overflow-x-hidden p-4'>
           
           {
             loading ? (
               loadingList.map((product,index)=> {
                 return (
-                  <div className='w-full min-w-[300px] md:min-w-[340px] max-w-[300px] md:max-w-[340px] bg-white rounded-sm shadow'>
-                    <div className='bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center animate-pulse'>
+                  <div key={index} className='w-full bg-white rounded-2xl shadow-md border border-slate-100 flex flex-col'>
+                    <div className='bg-slate-200 h-52 p-4 flex justify-center items-center animate-pulse rounded-t-2xl'>
                         
                     </div>
                     <div className='p-4 grid gap-3'>
@@ -40,18 +40,18 @@ const VerticalCard = ({loading,data = []}) => {
             ) : (
               data.map((product,index)=> {
                 return (
-                  <Link to={"/product/" + product._id} onClick={scrollTop} className='w-full min-w-[280px] md:min-w-[300px] max-w-[280px] md:max-w-[300px] bg-white rounded-sm shadow'>
-                    <div className='bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center'>
-                        <img src={product.productImage[0]} className='object-scale-down h-full hover:scale-110 transition-all cursor-pointer mix-blend-multiply' />
+                  <Link to={"/product/" + product._id} onClick={scrollTop} key={product?._id} className='w-full bg-white rounded-2xl shadow-md border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden group'>
+                    <div className='bg-slate-50 h-52 p-4 flex justify-center items-center group-hover:bg-white transition-colors'>
+                        <img src={product.productImage[0]} className='object-contain h-full hover:scale-110 transition-transform duration-300 mix-blend-multiply' />
                     </div>
-                    <div className='p-4 grid gap-3'>
-                        <h2 className='font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-black'>{product?.productName}</h2>
-                        <p className='capitalize text-slate-500'>{product?.category}</p>
-                        <div className='flex gap-3'>
-                          <p className='text-red-600 font-medium'>{displayPKRCurrency(product?.sellingPrice)}</p>
-                          <p className='text-slate-500 line-through'>{displayPKRCurrency(product?.price)}</p>
+                    <div className='p-4 grid gap-2'>
+                        <h2 className='font-semibold text-base md:text-lg text-ellipsis line-clamp-1 text-slate-800'>{product?.productName}</h2>
+                        <p className='capitalize text-slate-400 text-sm'>{product?.category}</p>
+                        <div className='flex items-center gap-3'>
+                          <p className='text-red-600 font-bold text-lg'>{displayPKRCurrency(product?.sellingPrice)}</p>
+                          <p className='text-slate-400 line-through text-sm'>{displayPKRCurrency(product?.price)}</p>
                         </div>
-                        <button onClick={(e)=>handleAddToCart(e,product?._id)} className='text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-0.5 rounded-full'>Add To Cart</button>
+                        <button onClick={(e)=>handleAddToCart(e,product?._id)} className='text-sm bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white px-3 py-2 rounded-full cursor-pointer font-medium shadow-sm hover:shadow-md transition-all active:scale-95 whitespace-nowrap'>Add To Cart</button>
                     </div>
                   </Link>
                 )
