@@ -187,32 +187,36 @@ const ProductDetails = () => {
                     </div>
                 </div>
             ) : (
-                <div className='flex flex-col gap-4'>
-                    <p className='bg-red-100 text-red-600 px-3 py-1 rounded-full inline-block w-fit font-medium text-sm border border-red-200 shadow-sm'>{data.brandName}</p>
-                    <h2 className='text-3xl lg:text-4xl font-bold text-slate-800 leading-tight'>{data?.productName}</h2>
-                    <p className='capitalize text-slate-500 font-medium text-lg'>{data?.category}</p>
+                <div className='flex flex-col lg:flex-row gap-20'>
+                    <div className='flex flex-col gap-[21px] w-full'>
+                        <p className='bg-red-100 text-red-600 px-3 py-1 rounded-full inline-block w-fit font-medium text-sm border border-red-200 shadow-sm'>{data.brandName}</p>
+                        <h2 className='text-3xl lg:text-4xl font-bold text-slate-800 leading-tight'>{data?.productName}</h2>
+                        <p className='capitalize text-slate-500 font-medium text-lg'>{data?.category}</p>
 
-                    <div className='text-yellow-400 flex items-center gap-1 text-lg'>
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
-                        <FaStarHalf />
+                        <div className='text-yellow-400 flex items-center gap-1 text-lg'>
+                            <FaStar />
+                            <FaStar />
+                            <FaStar />
+                            <FaStar />
+                            <FaStarHalf />
+                        </div>
+
+                        <div className='flex items-center gap-4 text-3xl font-bold my-2'>
+                            <p className='text-red-600'>{displayPKRCurrency(data?.sellingPrice)}</p>
+                            <p className='text-slate-400 line-through text-xl font-normal'>{displayPKRCurrency(data?.price)}</p>
+                        </div>
+
+                        <div className="flex items-center gap-4 my-4">
+                            <button className='border-2 border-red-600 rounded-full px-6 py-2 min-w-[120px] text-red-600 font-bold hover:bg-red-50 transition-colors shadow-md active:scale-95 whitespace-nowrap' onClick={(e)=>handleBuyProduct(e,data?._id)}>Buy Now</button>
+                            <button className='border-2 border-transparent rounded-full px-6 py-2 min-w-[120px] font-bold text-white bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 transition-all shadow-lg hover:shadow-xl active:scale-95 whitespace-nowrap' onClick={(e)=>handleAddToCart(e,data?._id)}>Add To Cart</button>
+                        </div>
                     </div>
 
-                    <div className='flex items-center gap-4 text-3xl font-bold my-2'>
-                        <p className='text-red-600'>{displayPKRCurrency(data?.sellingPrice)}</p>
-                        <p className='text-slate-400 line-through text-xl font-normal'>{displayPKRCurrency(data?.price)}</p>
-                    </div>
-
-                    <div className="flex items-center gap-4 my-4">
-                        <button className='border-2 border-red-600 rounded-full px-8 py-3 min-w-[140px] text-red-600 font-bold text-lg hover:bg-red-50 transition-colors shadow-md active:scale-95' onClick={(e)=>handleBuyProduct(e,data?._id)}>Buy Now</button>
-                        <button className='border-2 border-transparent rounded-full px-8 py-3 min-w-[140px] font-bold text-lg text-white bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 transition-all shadow-lg hover:shadow-xl active:scale-95' onClick={(e)=>handleAddToCart(e,data?._id)}>Add To Cart</button>
-                    </div>
-
-                    <div className='bg-white rounded-xl shadow-sm border border-slate-100 p-6'>
-                        <p className='text-slate-800 font-bold text-lg mb-2 border-b pb-2 border-slate-100'>Description</p>
-                        <p className='text-slate-600 leading-relaxed font-light'>{data?.description}</p>
+                    <div className='w-full'>
+                        <div className='rounded-xl p-6 top-20'>
+                            <p className='text-slate-800 font-bold text-lg mb-2 border-b pb-2 border-slate-400'>Description</p>
+                            <p className='text-slate-600 leading-relaxed font-light'>{data?.description}</p>
+                        </div>
                     </div>
                 </div>
             )
