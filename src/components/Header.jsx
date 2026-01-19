@@ -67,7 +67,7 @@ const Header = () => {
           <Link to={"/"}>
             <div className="flex items-center gap-1">
               <span className="text-2xl font-bold text-slate-800 font-sans tracking-tight">SOOMRO</span>
-              <span className="text-2xl font-bold text-red-600 font-sans tracking-tight">GROUP</span>
+              <span className="text-2xl font-bold text-red-600 font-sans tracking-tight">CART</span>
             </div>
             {/* <img
               className="rounded-xl"
